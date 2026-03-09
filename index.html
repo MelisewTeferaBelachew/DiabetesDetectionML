@@ -1,0 +1,342 @@
+<!DOCTYPE HTML>
+<!--
+	Massively by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+	<head>
+		<title>Melisew's Diabetes Detection Project </title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="assets/css/main.css" />
+		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+	</head>
+	<body class="is-preload">
+
+		<!-- Wrapper -->
+			<div id="wrapper" class="fade-in">
+
+				<!-- Intro -->
+					<div id="intro">
+						<h1>Melisew T. Belachew (PhD)<br/>
+						</p></h1>
+						<p>Freelance Data Analyst/Scientist and Associate Professor of Mathematics (<a href="https://www.haramaya.edu.et" target="_blank">@Haramaya University) </a> <a></a><br />
+						<a ></a></p>
+						<ul class="actions">
+							<li><a href="#header" class="button icon solid solo fa-arrow-down scrolly">Continue</a></li>
+						</ul>
+					</div>
+
+				<!-- Header -->
+					<header id="header">
+						<a href="index.html" class="logo">Project Two</a>
+					</header>
+
+				<!-- Nav -->
+					<nav id="nav">
+						<ul class="links">
+							<li class="active"><a href="index.html">ML for Diabetes Detection</a></li>
+							
+							
+						</ul>
+						<ul class="icons">
+							<li><a href="https://www.linkedin.com/in/melisew-tefera-belachew-27b297118/" target="_blank" class="icon brands fa-linkedin"><span class="label">LinkedIn</span></a></li>
+							<li><a href="https://github.com/MelisewTeferaBelachew" target="_blank" class="icon brands fa-github"><span class="label">GitHub</span></a></li>
+							<li><a href="https://orcid.org/0000-0002-8041-8495" target="_blank" class="icon brands fa-orcid"><span class="label">ORCiD</span></a></li>
+							<li><a href="https://scholar.google.com/citations?hl=en&user=muIiPUMAAAAJ" target="_blank"><img src="images/GoogleScholar.png" alt="Google Scholar" style="width: 24px; height: 24px"></a></li>
+							</ul>
+					</nav>
+
+				<!-- Main -->
+					<div id="main">
+
+						<!-- Featured Post -->
+							<article class="post featured">
+								<header class="major">
+									
+									<h2><a href="#"><br />
+									ML for Diabetes Detection on Pima </a></h2>
+									<p>Diabetes is a group of chronic and non-communicable metabolic diseases that affect 
+										how the body uses blood sugar. It is characterized by either a high blood sugar 
+										level due to insufficient insulin production in the body or ineffective use of 
+										insulin. In this project, some machine learning (ML) techniques are 
+										used to analyze PIDD (Pima Indian Diabetes Dataset) for the sake of identifying the risk 
+										factors of diabetes mellitus. </p>
+								</header>
+								<a href="#" class="image main"><img src="images/diabetes_illustration_2.jpg" alt="" /></a>
+
+							</article>
+
+						<!-- Posts -->
+							<section class="posts">
+								<article>
+									<header>
+										<span class="date"></span>
+										<h2><a href="#">Data Description and More</a></h2>
+									</header>
+									
+									<p> We have used the Pima Indian Diabetes Dataset (PIDD). The data is collected from 768 female
+										patients of Pima Indian heritage who are 21 years old or older. The dataset is arranged in 9
+										features as summarized in the table below. Moreover, we found out that 35% of the patients 
+										are diabetic while the remaining are non-diabetic, thereby signaling the existence of a 
+										moderate imbalance in the data.</p>
+										<a href="#" class="image fit"><img src="images/PIDD_table.jpg" alt="" /></a>
+									<p> The specific patterns of the underlying dataset are presented in the following table.</p>
+									<a href="#" class="image fit"><img src="images/PIDD_table_3.jpg" alt="" /></a>
+									
+								</article>
+								<article>
+									<header>
+										<span class="date"></span>
+										<h2><a href="#">Data Inspection<br />
+										</a></h2>
+									</header>
+									
+									<p>At a first glance, it seems that there are no NaNs which could be misleading. There are 
+										also a lot of zeros in the data, see the table below, which makes us a bit confused, as several medical features cannot
+										 be zero physiologically. Since we are dealing with PIDD, we need to watch out for the invalid 
+										 zeros in Glucose, BloodPressure, SkinThickness, Insulin and BMI. As suspected, we found a 
+										 very important information which we summarize in the table below. This table tells us 
+										 that, among other things, nearly 30% of SkinThickness and 49% of Insulin
+										 go missing. Properly treating these incidents will dramatically improve model reliability 
+										 where as ignoring it will definitely lead to false predictions. Data imputation is needed here 
+										 to properly deal with the missing values. Since median is robust to skewed medical variables and 
+										 a best practice in this domain, all the missing values are replaced by the median of their 
+										 respected features.</p>
+										<a href="#" class="image fit"><img src="images/PIDD_table_2.jpg" alt="" /></a>
+									
+								</article>
+								<article>
+									<header>
+										<span class="date"></span>
+										<h2><a href="#">Interpreting Risk Factors with LR and RF<br />
+										</a></h2>
+									</header>
+									
+									<p>After some adjustments, we used Logistic Regression (LR) to simply have a good understanding of the 
+										prediction scenario. The LR model provided the risk factors in descending order as depicted 
+										below which reveal that Glucose (strongest predictor), BMI + Age (compounding risk), 
+										DiabetesPedigreeFunction (genetic susceptibility).
+									</p>
+										<a href="#" class="image fit"><img src="images/risk_factors_lr_Pima_2.png" alt="" /></a>
+                                       
+									<p>Moreover, we were able to gain more insight by using the Random Forest (RF) classifier. 
+									With RF we have observed that Glucose is the single most powerful early indicator, 
+									BMI and Age amplify risk together, Genetic predisposition is non-negligible and Recall-optimized 
+									models reduce missed diabetes cases significantly.</p>
+
+									<p>We came to the conclusion that, compared to LR, RF is able to capture nonlinear interactions (BMI + Age),
+										improves recall score slightly, results are less interpretable but have stronger predictive power. </p>
+								</article>
+								<article>
+									<header>
+										<span class="date"></span>
+										<h2><a href="#">Feature Distribution<br />
+									</a></h2>
+									</header>
+									
+									<p> For PIDD, the most informative "relative plots" are feature distributions 
+										split by Outcome (0 vs 1). These let us visually compare diabetic vs non-diabetic patients feature by feature, 
+										which is exactly what we want for early detection insight.</p>
+									<p> Since KDE is ideal for medical risk comparison, we have plotted KDE distributions for each feature, 
+										separated by Outcome as shown below. The results tell us:</p>
+									<a href="#" class="image fit"><img src="images/relative_distribution_plot.png" alt="" /></a>
+									
+									<p> 1. Glucose: Most important feature, diabetic curve shifts strongly right and minimal overlap at 
+										high glucose. <br /> 
+	                                 2. BMI: Diabetics concentrated at higher BMI, clear obesity-related risk, it an 
+										important modifiable risk factor.<br />
+									 3. Age: Diabetes probability increases with age, it is a progressive metabolic risk.<br />
+									 4. DiabetesPedigreeF: Long right tail for diabetics, indicates genetic susceptibility,  
+										non-obvious but important signal. <br />
+									 5. Insulin and SkinThickness: Heavier overlap, they both are less predictive alone.<br />
+									 6. BloodPressure: Significant overlap, weak standalone predictor, secondary risk factor.<br />
+									 7. Pregnancies: Higher pregnancies --- higher diabetes risk, useful for population-specific insight. <br />
+									</p>
+								
+								</article>
+								<article>
+									<header>
+										<span class="date"></span>
+										<h2><a href="#">XGBOOST <br />
+										</a></h2>
+									</header>
+									<p>We now change the model to XGBoost for a multitude of reasons including 
+										its ability to capture nonlinear effects, handle features automatically, produce strong recall score, 
+										and integrate perfectly with SHAP. </p>
+									<a href="#" class="image fit"><img src="images/calculation_XGB_Pima.png" alt="" /></a>
+			                       <p> The results in the above figure tell us that recall for the diabetes class has increased, a good sign;
+	                                 ROC-AUC has increased, another good sign, and fewer false negatives than LR and RF.</p>
+									
+								</article>
+								<article>
+									<header>
+										<span class="date"></span>
+										<h2><a href="#"> Global Feature Imprtance (SHAP)<br />
+										</a></h2>
+									</header>
+									
+									<p> Now, we combine XGBoost with SHAP as the merger is claimed to be the GOLD standard for explainable ML on 
+										tabular data. We did a train-test split and used the training data to do summary plot of the SHAP 
+										values as shown below. In the figure the risk factors are ranked as per their influence, confirming Glocuse as 
+									the dominant early biomarker. </p>
+									<a href="#" class="image fit"><img src="images/mean_SHAP_XGB.png" alt="" /></a>
+		
+								</article>
+								<article>
+									<header>
+										<span class="date"></span>
+										<h2><a href="#">Direction of risk ("Beeswarm" plot)<br />
+										</a></h2>
+									</header>
+									<p>A nice looking 'bee swarm' plot is depicted in the figure below which is interpreted as:<br />
+									 1. High glucose --- strong push toward diabetes <br />
+									 2. High BMI + older age --- nonlinear risk amplification <br />
+									 3. Low values --- protective effect <br />
+										</p>
+									<p> This shows how risk changes, not just which features matter. </p>
+									<a href="#" class="image fit"><img src="images/bee_swarm_XGBoost.png" alt="" /></a>
+									
+									
+								</article>
+								<article>
+									<header>
+										<span class="date"></span>
+										<h2><a href="#">RISK-THRESHOLD VISUALIZATIONS<br />
+										</a></h2>
+									</header>
+									
+									<p> Now we visualize how the risk scores translate into decisions using the individual XGBoost risk scores. 
+										 </p>
+										
+								<a href="#" class="image fit"><img src="images/risk_score_distribution.png" alt="" /></a>
+								<p>The results in the above figure mean:<br />
+										 1. Diabetics dominate right side<br />
+										 2. Non-diabetics dominate left side<br />
+										 3. Overlap region implies diagnostic uncertainty<br />
+										 This tells us that thresholds convert probabilities into actionable rules. 
+											Moreover, the individual scores help us to identify which patient falls in which risk threshold.<br />
+										</p>
+								</article>
+								<article>
+									<header>
+										<span class="date"></span>
+										<h2><a href="#">XGBOOST based diabetes risk-score<br />
+										</a></h2>
+									</header>
+									
+									<p>The diabetic risk scores have been calculated for each individual and depicted in the following figure 
+										after arranging them in categories. </p>
+									<a href="#" class="image fit"><img src="images/diabetes_prob_riskcore_2.png" alt="" /></a>
+									<p> The results in the above figure means: Diabetes rate increases monotonically; 
+										High-risk bins have very high prevalence; XGBoost confirms good calibration and it is deal 
+										for population screening.</p>
+										<p> We have also categorized the risc score of the patients and summarized it in the table below.</p>
+										<a href="#" class="image fit"><img src="images/risk_category_table.png" alt="" /></a>
+										<p>The risk scores have been validated and we found out that the high-risk group has high diabetes 
+											prevalence where as the low-risk group has low prevalence thereby confirming the suitability of 
+											XGBoost for screening programs.</p>
+								</article>
+								<article>
+									<header>
+										<span class="date"></span>
+										<h2><a href="#">Insight: Screening Policy and Intervention<br />
+										</a></h2>
+									</header>
+									<a href="#" class="image fit"><img src="images/diabetes_treatment_more_2.png" alt="" /></a>
+									<p>We have found the following:<br />
+									1. XGBoost is found to be the winner (compared to LR and RF) because of the following reasons:<br />
+									i. it provides the best recall score --- very useful for early detection<br />
+									ii. it makes very good use of the non-linearity effects, i.e., combined effects of the features<br />
+									iii. it facilitates high quality SHAP explanations<br />
+									iv. its results are clinically trust worthy<br />
+								    2. Glucose is the dominant early biomarker, it pushes strongly towards diabetes <br />
+									3. Combined (non-linear) risk amplification is revealed by high BMI + older Age <br />
+									4. The recommended data-driven, clinically interpretable screening policy which 
+									optimizes early-detection is presented in the table below:
+									<a href="#" class="image fit"><img src="images/risk_score_summary.png" alt="" /></a>
+								</p>
+									
+								</article>
+							</section>
+
+			
+						<!-- Footer -->
+							<footer>
+								<div class="pagination">
+									<!--<a href="#" class="previous">Prev</a>-->
+									<a href="#" class="page active">1</a>
+					
+								</div>
+							</footer>
+
+					</div>
+
+				<!-- Footer -->
+					<footer id="footer">
+						<section>
+							<form method="post" action="#">
+								<div class="fields">
+									<div class="field">
+										<label for="name">Name</label>
+										<input type="text" name="name" id="name" />
+									</div>
+									<div class="field">
+										<label for="email">Email</label>
+										<input type="text" name="email" id="email" />
+									</div>
+									<div class="field">
+										<label for="message">Message</label>
+										<textarea name="message" id="message" rows="3"></textarea>
+									</div>
+								</div>
+								<ul class="actions">
+									<li><input type="submit" value="Send Message" /></li>
+								</ul>
+							</form>
+						</section>
+						<section class="split contact">
+							<section class="alt">
+								<h3>Address</h3>
+								<p>Haramaya University, 138<br />
+								Dire Dawa, Ethiopia</p>
+							</section>
+							<section>
+								<h3>Phone</h3>
+								<p><a href="#">(+251) 963-07 82 43</a></p>
+							</section>
+							<section>
+								<h3>Email</h3>
+								<p><a href="#">melisewt@gmail.com</a></p>
+							</section>
+							<section>
+								<h3>Social</h3>
+								<ul class="icons alt">
+									<li><a href="https://www.linkedin.com/in/melisew-tefera-belachew-27b297118/" target="_blank" class="icon brands alt fa-linkedin"><span class="label">LinkedIn</span></a></li>
+									<li><a href="https://github.com/MelisewTeferaBelachew" target="_blank" class="icon brands alt fa-github"><span class="label">GitHub</span></a></li>
+									<li><a href="https://orcid.org/0000-0002-8041-8495" target="_blank" class="icon brands fa-orcid"><span class="label">ORCiD</span></a></li>
+								    <li><a href="https://scholar.google.com/citations?hl=en&user=muIiPUMAAAAJ" target="_blank"><img src="images/GoogleScholar.png" alt="Google Scholar" style="width: 24px; height: 24px"></a></li>
+								</ul>
+							</section>
+						</section>
+					</footer>
+
+				<!-- Copyright -->
+					<div id="copyright">
+						<ul><li>&copy; Untitled</li><li>Design: <a href="https://html5up.net">HTML5 UP</a></li></ul>
+					</div>
+
+			</div>
+
+		<!-- Scripts -->
+			<script src="assets/js/jquery.min.js"></script>
+			<script src="assets/js/jquery.scrollex.min.js"></script>
+			<script src="assets/js/jquery.scrolly.min.js"></script>
+			<script src="assets/js/browser.min.js"></script>
+			<script src="assets/js/breakpoints.min.js"></script>
+			<script src="assets/js/util.js"></script>
+			<script src="assets/js/main.js"></script>
+
+	</body>
+</html>
