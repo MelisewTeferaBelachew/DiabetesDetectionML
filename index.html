@@ -36,7 +36,7 @@
 				<!-- Nav -->
 					<nav id="nav">
 						<ul class="links">
-							<li class="active"><a href="index.html">ML for Diabetes Detection</a></li>
+							<li class="active"><a href="index.html">ML and NMF for Diabetes Detection on Pima</a></li>
 							
 							
 						</ul>
@@ -56,13 +56,13 @@
 								<header class="major">
 									
 									<h2><a href="#"><br />
-									ML for Diabetes Detection on Pima </a></h2>
+									ML and NMF for Diabetes Detection on Pima </a></h2>
 									<p>Diabetes is a group of chronic and non-communicable metabolic diseases that affect 
 										how the body uses blood sugar. It is characterized by either a high blood sugar 
 										level due to insufficient insulin production in the body or ineffective use of 
-										insulin. In this project, some machine learning (ML) techniques are 
-										used to analyze PIDD (Pima Indian Diabetes Dataset) for the sake of identifying the risk 
-										factors of diabetes mellitus. </p>
+										insulin. In this project, some machine learning (ML) techniques and Nonnegative 
+										Matrix Factorization (NMF) are used to analyze PIDD (Pima Indian Diabetes Dataset) 
+										for the sake of identifying the risk factors of diabetes mellitus. </p>
 								</header>
 								<a href="#" class="image main"><img src="images/diabetes_illustration_2.jpg" alt="" /></a>
 
@@ -173,7 +173,7 @@
 								<article>
 									<header>
 										<span class="date"></span>
-										<h2><a href="#"> Global Feature Imprtance (SHAP)<br />
+										<h2><a href="#"> Global Feature Importance (SHAP)<br />
 										</a></h2>
 									</header>
 									
@@ -241,6 +241,161 @@
 								<article>
 									<header>
 										<span class="date"></span>
+										<h2><a href="#">NMF phenotypes and XGBOOST + SHAP features<br />
+										</a></h2>
+									</header>
+									<p>For employing Nonnegative Matrix Factorization (NMF) on Pima, the first thing to do is to prepare the data matrix. 
+										This starts with selecting the feature columns of the data (all except Outcome) and ensuring non-negativity by 
+										applying the MinMaxScaler(). Eventually, fit NMF after choosing an appropriate rank k and create proper data 
+										frames for the factors W and H. </p>
+										<p>For choosing the 'optimal' number of clusters k, we first employed the elbow method and obtained k = 5 as a 
+											starting value. 
+									<a href="#" class="image fit"><img src="images/elbow_NMF_k_5.png" alt="" /></a></p>
+									<p>With the help of the above method, five latents (hidden features) were identified and depicted in the above figure and 
+										described in the following table.
+									<a href="#" class="image fit"><img src="images/latent_Table.png" alt="" /></a></p>
+									<p>The practical interpretation is that one needs to do screening as: High latent_1 --- immediate glucose testing, 
+										High latent_3 --- family-history-based screening, High latent_4 --- lifestyle intervention.</p>
+										<p>NMF and XGBOOST + SHAP are complimentary not competing. The table below presents what each method explains.
+										<a href="#" class="image fit"><img src="images/NMF_XGBOOST_SHAP_Table.png" alt="" /></a></p>
+									<p> The table below maps NMF phenotypes with SHAP features. The insight we get from this table is that SHAP confirms what NMF discovered structurally but 
+									 SHAP is based on feature-level while NMF is based on pathway-level. 
+									<a href="#" class="image fit"><img src="images/NMF_Phenotypes_SHAP_Features_Table.png" alt="" /></a>
+								    </p>	
+									</article>
+							
+									<article>
+									<header>
+										<span class="date"></span>
+										<h2><a href="#">NMF and the best silhouette score<br />
+										</a></h2>
+									</header>
+									<p> Employing the highest silhouette score strategy, on top of the elbow method,  provided k=3 as the best value for the 
+										number of clusters, see the figure below which contains the numerical values of the latent cluster phenotype profiles. </p>
+									<a href="#" class="image fit"><img src="images/latent_phenotype_heatmap_cluster.png" alt="" /></a>
+									
+									<p> Cluster 0: Adipose_Vascular phenotype: dominant latents are BP, Skin Thickness and Pregnancies. This means
+										individuals in this cluster are often prediabetic or the diabetes is at early stage.
+									</p>
+									<p> Cluster 1: Genetic_Adipose mixed phenotype: dominant latents are Genetic_Glycemic and 
+										Adipose Vascular meaning this a copound-risk group having strong genetic susceptibility and elevated glucose.
+										These patients may develop diabetes with less obesity and moderate BMI.
+
+									</p>
+									<p> Cluster 2: Age-related vascular phenotype: dominant latent is Age_Vascular which means this cluster reflects
+										aging-related insulin sensitivity decline, vascular stifness and diabetes risk driven by age.
+									</p>
+									<p> Experimenting on diabetes prevalence per cluster revealed that Cluster 1 shows highest diabetes rate
+										while Cluster 0 and 2 exhibit moderate and moderate to high (depending on age) diabetic behaviour, respectively.</p>
+								</article>
+								<article>
+									<header>
+										<span class="date"></span>
+										<h2><a href="#">Cluster specific SHAP<br />
+										</a></h2>
+									</header>
+									<p>In this section, we will explain how XGBOOST behaves inside each NMF phenotype (cluster). 
+										Below we provide the extracted dominant features from each cluster. </p>
+										<p>
+										For Cluster 0 
+										(early Adipose_Vascular dysregulation) we have:  
+										<a href="#" class="image fit"><img src="images/cluster_0_shap.png" alt="" /></a>
+										The above results mean, in Cluster 0, diabetes risk is driven by physiological insulin resistance, 
+										not lifestyle or aging yet. This is ideal for early detection and prevention.
+									</p>
+									<p> For Cluster 1 (genetically primed metabolic diabetes), we have:
+										<a href="#" class="image fit"><img src="images/cluster_1_shap.png" alt="" /></a>
+										The above results tell us that patients in this cluster are genetically primed, 
+										lifestyle alone may not fully mitigate risk. Supports family-based screening and early pharmacologic prevention. 
+									 </p>
+									 <p>
+										For Cluster 2 (age-associated vascular diabetes), we have:
+										<a href="#" class="image fit"><img src="images/cluster_2_shap.png" alt="" /></a>
+										The above results mean, in Cluster 2, risk emerges from age-related insulin sensitivity
+										decline rather than obesity alone. Focus on vascular protection and moderate glycemic control.
+									</p>
+									 <p>
+										One can observe that the patterns look similar and might wonder why. This is because all clusters involve type-2 
+										diabetes, and glucose and insulin are unversal indicators. Clusters only differ in relative emphasis, 
+										not feature exclusion. This indicates that phenotypes differ in why diabetes develops, not what diabetes is.
+									 </p>
+									 <a href="#" class="image fit"><img src="images/radar_plot.png" alt="" /></a>
+									<p>The radar plot of phenotypes in the above figure indicates that each cluster has a distinct shape, 
+										overlaps show shared vascular stress and separate regions reveal different diabetes mechanisms.</p>
+								</article>
+								<article>
+									<header>
+									<span class="date"></span>
+										<h2><a href="#">Targetted interventions per cluster<br />
+										</a></h2>	
+									</header>
+									<p> Cluster 0: Early Adipose-Vascular Dysregulation<br />
+									Primary Risks<br />
+									1. Fat distribution<br />
+									2. Blood pressure<br />
+									3. Pregnancy-related metabolic strain<br />
+									Interventions<br />
+									1. Weight management (moderate, not aggressive)<br />
+									2. Blood pressure control<br />
+									3. Post-pregnancy metabolic monitoring<br />
+									4. Lifesyle intervention --- medication
+									</p>
+									<p>Cluster 1: Genetically Primed Metabolic Diabetes<br />
+									Primary Risks<br />
+									1. Family hitory<br />
+									2. Hyperglycemia at lower BMI<br />
+									Interventions<br />
+									1. Early glucose monitoring<br />
+									2. Preventive pharmacotherapy<br />
+									3. Family-based screening<br />
+									4. Lifestyle alone may be insufficient
+									</p>
+									<p>
+									Cluster 2: Age-Associated Vascular Diabetes<br />
+									Primary Risks<br />
+									1. Aging vasculature<br />
+									2. Blood pressure<br />
+									Interventions<br />
+									1. Cardiovascular risk management<br />
+									2. Moderate glycemic control<br />
+									3. Avoid overly aggressive weight loss<br />
+									4. Monitor renal and vascular function
+									</p>
+									<p>Latent phenotype clustering revealed three clinically interpretable diabetes sub-types,
+										 each associated with distinct risk profiles and predictive feature importance patterns. 
+										 Cluster-specific risk scores and SHAP analyses demonstrated that supervised model 
+										 decision logic varied meaningfully across phenotypes, supporting the utility of 
+										 phenotype-aware risk stratification and targeted intervention strategies.</p>
+								</article>
+								<article>
+									<header>
+										<span class="date"></span>
+										<h2><a href="#">Comparison: NMF vs PCA<br />
+										</a></h2>
+									</header>
+										<p>In general, PCA is about variance compression while NMF is about latent risk factor discovery.
+										Our experiments reveal that PCA optimizes variance whereas NMF optimizes additive reconstruction. 
+										These two are not directly comparable numerically, only conceptually.
+									</p>
+									<p>Experiments done regarding component loadings reveal that PCA results contain mixed signs (+ and -)
+									 leading to cancelation of features with each other, and it also failed to provide clean phenotype.</p>
+									 <p>On the otherhand, NMF loadings were found to be clinically interpretable. Results from NMF-based 
+										experiments show that there are only positive contributions facilitating additive reconstruction. 
+										Moreover, clear dominance patterns were obsered like Glucose + Insulin, BMI + SKinThickness, 
+										and Age + Pregnancies.  
+									 </p>
+									 <p>In conclusion, while PCA captured a larger fraction of total variance, its components mixed positively 
+										and negatively contributing clinical features, limiting interpretability. In contrast, NMF produced 
+										non-negative, additive latent factors corresponding to clinically coherent metabolic phenotypes. 
+										Despite similar predictive performance, NMF offered superior interpretability and phenotype stability, 
+										making it more suitable for risk stratification and intervention design.</p>
+										<p>The final verdict of the comparison is presented in the following table:
+											<a href="#" class="image fit"><img src="images/Comparison_NMF_PCA.png" alt="" /></a>
+										</p>
+								</article>
+								<article>
+									<header>
+										<span class="date"></span>
 										<h2><a href="#">Insight: Screening Policy and Intervention<br />
 										</a></h2>
 									</header>
@@ -255,9 +410,40 @@
 									3. Combined (non-linear) risk amplification is revealed by high BMI + older Age <br />
 									4. The recommended data-driven, clinically interpretable screening policy which 
 									optimizes early-detection is presented in the table below:
-									<a href="#" class="image fit"><img src="images/risk_score_summary.png" alt="" /></a>
+									<a href="#" class="image fit"><img src="images/risk_score_summary.png" alt="" /></a>									
 								</p>
 									
+								</article>
+								<article>
+									<header>
+										<span class="date"></span>
+										<h2><a href="#">NMF inspired Insight <br />
+										</a></h2>
+									</header>
+									<a href="#" class="image fit"><img src="images/NMF_decomposition.png" alt="" /></a>
+									<p>1. NMF in combination with the elbow method revealed five (k=5) latent metabolic phenotypes underlying 
+									diabetes risk, highlighting the heterogeneous pathways through which Type 2 diabetes develops
+									in the Pima Indian population.<br /> 	
+									2. BP appears in many NMF clusters indicating that it is a systemic stress indicator, it is 
+										linked to insulin resistance, obesity, age and pregnancy. <br />
+									3. BP is a shared downstream effect of
+										metabolic dysregulation. NMF correctly uses it as a cross-cutting amplifier, not a driver.<br />
+									4. NMF based cluster-specific analyses demonstrated a shared core decision pathway 
+									dominated by insulin-glucose dynamics across all phenotypes. <br />
+									5. NMF enabled to learn that secondary feature contributions varied by cluster, with genetic susceptibility 
+									contributing more prominently in genetically primed individuals and age exerting greater influence
+									in age-associated phenotypes.<br />
+									6. NMF and silhouette score based latent phenotype clustering revealed three (k=3) clinically interpretable diabetes sub-types, 
+									each associated with distinct risk profiles and predictive feature importance patterns. <br />
+									7. Experimenting on diabetes prevalence per cluster revealed that the Genetic-Adipose cluster shows highest diabetes rate
+									while Adipose-Vascular and Age-Associated-Vascular clusters exhibit moderate and moderate to high (depending on age) diabetic behaviour, respectively. 
+									<br />
+									8. Cluster-specific risk scores and SHAP analyses demonstrated that supervised model decision logic 
+									varied meaningfully across phenotypes, supporting the utility of phenotype-aware risk stratification 
+									and targeted intervention strategies. <br />
+									9. It is recommended to use NMF for phenotypes, risk scores and clustering but mention PCA only 
+									as a baseline, not main method.
+									</p>
 								</article>
 							</section>
 
